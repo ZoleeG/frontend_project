@@ -8,7 +8,6 @@ const NavBar2 = () => {
     
   return (
       <nav className="navbar" id="myNavbar">
-        <Link to="/comments"><FaRegComments /></Link>
         <Link to="/" id="home-button"><RiHome2Line /></Link>
         <Link to="/topics" id="topics-button"><MdOutlineTopic /></Link>
       </nav>

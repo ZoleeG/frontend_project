@@ -1,0 +1,23 @@
+.grid_container{
+    display: grid;
+    grid-template-rows: 85px auto auto 85px;
+    grid-template-areas: 'myHeader' 'myArticles' 'myComments' 'myNavbar' ;
+    grid-gap: 0px;
+    padding-top: 0px;
+}
+
+.header{
+    grid-area: myHeader;
+}
+
+.navbar{
+    grid-area: myNavbar;
+}
+
+.articles{
+    grid-area: myArticles;
+}
+
+.comments{
+    grid-area: myComments;
+}
