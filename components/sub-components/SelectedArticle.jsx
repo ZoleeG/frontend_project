@@ -1,26 +1,34 @@
+import { FaComment } from "react-icons/fa";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import styles from "./SelectedArticle.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect } from "react";
-import { fetchArticleById } from "../../utils/api.js";
+import { fetchArticleById, fetchCommentsByArticleId } from "../../utils/api.js";
 import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const SelectedArticle = ({article_id, votes, loading, setLoading}) => {
+const SelectedArticle = ({setComments, article_id, votes, isLoading, setIsLoading, isOpen, setIsOpen}) => {
   
   const [selectedArticle, setSelectedArticle] = useState([]);
   
-  useEffect(() => {
-    setLoading(true);
-    fetchArticleById(article_id).then((fetchedArticle) => {
-      setLoading(false);
-      setSelectedArticle(fetchedArticle);
-    });
-  }, []);
 
-  return loading ? (
+  const toggleOpen = () =>{
+    setIsOpen((currOpen)=>!currOpen)
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([fetchArticleById(article_id),fetchCommentsByArticleId(article_id)])
+    .then(([article,comments]) => {
+      setIsLoading(false);
+      setSelectedArticle(article)
+      setComments(comments)
+    });
+  }, [article_id]);
+
+  return isLoading ? (
     <div className={styles.loading_symbol}>
       <l-line-spinner
         size="40"
@@ -51,8 +59,8 @@ const SelectedArticle = ({article_id, votes, loading, setLoading}) => {
         src={selectedArticle.article_img_url}
         alt={selectedArticle.title}
       />
-      <div className={styles.comment_count}>
-        <IoChatbubbleOutline />
+      <div className={styles.comment_count} onClick={toggleOpen}>{isOpen ? <FaComment /> : <IoChatbubbleOutline />}
+        
         {selectedArticle.comment_count}
       </div>
       <div className={styles.votes}>

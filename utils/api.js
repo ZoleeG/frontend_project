@@ -15,3 +15,12 @@ export const fetchArticles = () => {
     return res.data.articles;
   });
 };
+
+export const fetchCommentsByArticleId = (article_id) => {
+  return backendApi.get(`/articles/${article_id}/comments`).then((res) => {
+    return res.data.comments;
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
+};

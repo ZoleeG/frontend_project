@@ -8,18 +8,18 @@ import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const Articles = ({setVotes, setLoading, loading}) => {
+const Articles = ({setVotes, setIsLoading, isLoading}) => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     fetchArticles().then((fetchedArticles) => {
-      setLoading(false);
+      setIsLoading(false);
       setArticles(fetchedArticles);
     });
   }, []);
 
-  return loading ? (
+  return isLoading ? (
     <div className={styles.loading_symbol}>
       <l-line-spinner
         size="40"
