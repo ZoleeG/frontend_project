@@ -3,19 +3,20 @@ import { FaRegHeart } from "react-icons/fa";
 import styles from "./Articles.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect } from "react";
-import { fetchArticles } from "../../utils/api.js";
+import { fetchArticles } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const Articles = ({setVotes, setIsLoading, isLoading}) => {
+const Articles = ({setVotes}) => {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     fetchArticles().then((fetchedArticles) => {
-      setIsLoading(false);
       setArticles(fetchedArticles);
+      setIsLoading(false);
     });
   }, []);
 
