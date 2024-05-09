@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const Articles = ({setVotes}) => {
+const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -45,7 +45,7 @@ const Articles = ({setVotes}) => {
         const date = new Date(created_at)
         return (
           <li id={article_id} key={article_id}>
-              <Link to={`/${article_id}`} onClick={()=>{setVotes(votes)}}>
+              <Link to={`/${article_id}`}>
               <div className={styles.article_card}>
                 <div className={styles.author}>{author}</div>
                 <div className={styles.created_at}>{date.toLocaleDateString()}</div>

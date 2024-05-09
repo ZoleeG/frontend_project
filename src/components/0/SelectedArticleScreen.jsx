@@ -5,7 +5,7 @@ import SelectedArticle from '../1/SelectedArticle';
 import ArticleInfoNavBar from "../1/ArticleInfoNavBar";
 import Header from "../1/Header";
 
-const SelectedArticleScreen = ({votes}) => {
+const SelectedArticleScreen = () => {
 
     const { article_id } = useParams()
     
@@ -13,7 +13,7 @@ const SelectedArticleScreen = ({votes}) => {
     return <div className={styles.grid_container}>
         <Header className={styles.header} />
         <ArticleInfoNavBar className={styles.navbar} />
-        <SelectedArticle className={styles.articles} article_id={article_id} votes={votes} />
+        <SelectedArticle className={styles.articles} article_id={article_id} />
         </div>
 }
 

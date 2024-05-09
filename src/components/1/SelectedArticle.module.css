@@ -6,7 +6,7 @@ body{
 
 .outer_container{
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: 'auto' 'auto';
     grid-template-areas: 'article' 'comments';
 }
 
@@ -17,6 +17,11 @@ body{
 li{ 
     list-style: none;
 }
+
+.listed_comment_hide{
+    display: none;
+}
+
 
 .article_card{
     grid-area: article;
@@ -30,6 +35,7 @@ li{
     padding: 2rem;
     text-align: left;
     font-size: 1.2rem;
+    padding-bottom: 5rem;
 }
 
 .comment_card{
@@ -116,4 +122,10 @@ li{
 
 .votes{
     text-align: center;
+}
+
+.like_btn{
+    background-color: rgba(255, 255, 255, 0.8);;
+    border: none;
+    font-size: 1.5rem;
 }
