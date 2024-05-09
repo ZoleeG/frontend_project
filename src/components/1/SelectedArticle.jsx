@@ -12,7 +12,7 @@ import ErrorPage from '../0/ErrorPage';
 
 lineSpinner.register();
 
-const SelectedArticle = ({ article_id}) => {
+const SelectedArticle = ({ article_id }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState({});
@@ -113,7 +113,7 @@ const SelectedArticle = ({ article_id}) => {
           <li id={comment_id} key={comment_id} className={isOpen ? styles.listed_comment : styles.listed_comment_hide}>
               
               <article className={styles.comment_card}>
-                <h1 className={styles.author}>{author}</h1>
+                <aside className={styles.author}>{author}</aside>
                 <time className={styles.created_at}>{date.toLocaleDateString()}</time>
                 <p className={styles.text}>
                   {body}
