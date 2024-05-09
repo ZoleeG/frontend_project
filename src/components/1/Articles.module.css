@@ -16,42 +16,64 @@ a{
     color: black;
 }
 
-.comment_card{
+.article_card{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    background-color: aqua;
-    margin: 2em;
+    margin: 1rem;
     border-radius: 5px;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto auto;
-    padding: 10px;
+    padding: 2rem;
     text-align: left;
+    font-size: 1.2rem;
 }
       
 .author{
     border-bottom: 2px dotted gray;
     text-align: left;
     grid-column: 1/2;;
-    font-size: 25px;
 }
 
 .created_at{
     border-bottom: 2px dotted gray;
     text-align: right;
     grid-column: 2/3;
-    font-size: 25px;
 }
       
-.comment_card .text {
-    background-color: aqua;
+.article_card .text {
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
-    font-size: 30px;
+    font-size: 1.5rem;
     grid-column:1/3;
 }
 
-.comment_card:hover {
+.title{
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-line;
+    text-align: center;
+}
+
+.topic{
+    font-size: 1rem;
+}
+
+.article_card:hover {
     box-shadow: 0 12px 24px 0 rgba(0,0,0,0.2);
+}
+
+.article{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
+}
+
+.img{
+    display: block;
+    border-radius: 20px;
+    grid-column: 1/3;
+    margin-bottom: 1rem;
+    max-width: 87%;
+    margin-left: 5%;
 }
 
 .loading_symbol{

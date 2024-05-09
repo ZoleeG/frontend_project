@@ -3,19 +3,20 @@ import { FaRegHeart } from "react-icons/fa";
 import styles from "./Articles.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect } from "react";
-import { fetchArticles } from "../../utils/api.js";
+import { fetchArticles } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const Articles = ({setVotes, setIsLoading, isLoading}) => {
+const Articles = () => {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     fetchArticles().then((fetchedArticles) => {
-      setIsLoading(false);
       setArticles(fetchedArticles);
+      setIsLoading(false);
     });
   }, []);
 
@@ -44,7 +45,7 @@ const Articles = ({setVotes, setIsLoading, isLoading}) => {
         const date = new Date(created_at)
         return (
           <li id={article_id} key={article_id}>
-              <Link to={`/${article_id}`} onClick={()=>{setVotes(votes)}}>
+              <Link to={`/${article_id}`}>
               <div className={styles.article_card}>
                 <div className={styles.author}>{author}</div>
                 <div className={styles.created_at}>{date.toLocaleDateString()}</div>

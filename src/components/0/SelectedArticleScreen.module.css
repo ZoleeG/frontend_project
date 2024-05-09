@@ -1,0 +1,18 @@
+.grid_container{
+    display: grid;
+    grid-template-rows: 85px auto 85px;
+    grid-template-areas: 'myHeader' 'myArticles' 'myNavbar';
+    grid-gap: 0;
+}
+
+.header{
+    grid-area: myHeader;
+}
+
+.navbar{
+    grid-area: myNavbar;
+}
+
+.articles{
+    grid-area: myArticles;
+}

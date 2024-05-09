@@ -24,3 +24,9 @@ export const fetchCommentsByArticleId = (article_id) => {
     console.log(err);
   })
 };
+
+export const patchVote = (article_id, vote) => {
+  return backendApi.patch(`/articles/${article_id}`, { inc_votes : vote }).then((res) => {
+    return res.data.article;
+  })
+}

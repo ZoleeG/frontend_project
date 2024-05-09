@@ -3,7 +3,7 @@ import { RiHome2Line } from "react-icons/ri";
 import { MdOutlineTopic } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
-const NavBar2 = () => {
+const ArticleInfoNavBar = () => {
 
     
   return (
@@ -14,4 +14,4 @@ const NavBar2 = () => {
   );
 };
 
-export default NavBar2
+export default ArticleInfoNavBar
