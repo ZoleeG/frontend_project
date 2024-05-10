@@ -36,3 +36,15 @@ export const postComment = (article_id, author, comment ) => {
     return res.data.newComment;
   })
 }
+
+export const  fetchUser= (username) => {
+  return backendApi.get("/users",{params:{username: username}}).then((res) => {
+    return res.data.users;
+  })
+}
+
+export const  deleteComment= (comment_id) => {
+  return backendApi.delete(`comments/${comment_id}`).then((res) => {
+    return res.data;
+  })
+}
