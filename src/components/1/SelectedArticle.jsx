@@ -3,17 +3,22 @@ import { IoChatbubbleOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import styles from "./SelectedArticle.module.css";
 import { lineSpinner } from "ldrs";
-import { useState, useEffect } from "react";
-import { fetchArticleById, fetchCommentsByArticleId, patchVote } from "../../../utils/api.js";
+import { useState, useEffect, useContext } from "react";
+import { fetchArticleById, fetchCommentsByArticleId, patchVote, deleteComment } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
 import { IoHeartDislikeOutline } from "react-icons/io5";
 import { AiOutlineDislike, AiOutlineLike} from "react-icons/ai";
 import ErrorPage from '../0/ErrorPage';
+import { RiDeleteBinLine } from "react-icons/ri";
+import { ThemeContext } from '../../context/Theme';
+
 
 lineSpinner.register();
 
 const SelectedArticle = ({ article_id }) => {
 
+  const [isSending, setIsSending] = useState(false);
+  const { activeUser, setActiveUser } = useContext(ThemeContext)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -36,12 +41,26 @@ const SelectedArticle = ({ article_id }) => {
     .catch((err)=>{
       setErr({err})
     })
-  }, [article_id]);
+  }, []);
 
   if(error) {
     return <ErrorPage message={error.err.message}/>
   }
-  
+  const handleDelete = (comment_id, author) => {
+    if(activeUser && activeUser.username===author){
+      setIsSending(true)
+      deleteComment(comment_id).then(()=>{
+        setIsSending(false)
+      })
+      .catch((error)=>{
+        setIsSending(false)
+        setErr('Oops, something went wrong, try again!')
+      })
+    }else{
+      alert('No right to delete')
+    }
+  }
+
   const handleVote = (vote) => {
     patchVote(article_id, vote)
     setVoteChange((currVoteChange)=> currVoteChange+vote)
@@ -118,6 +137,7 @@ const SelectedArticle = ({ article_id }) => {
                 <p className={styles.text}>
                   {body}
                 </p>
+                <button disabled={isSending} className={styles.bin_btn} type='button' onClick={()=>{handleDelete(comment_id, author)}}><RiDeleteBinLine /></button>
                 <div className={styles.comment_count}><IoChatbubbleOutline /></div>
                 <div className={styles.votes}><FaRegHeart />{+votes}</div>
               </article>

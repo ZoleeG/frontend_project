@@ -117,14 +117,28 @@ li{
 
 .comment_count{
     text-align: center;
+    grid-column: 1/2;
 }
 
 .votes{
     text-align: center;
+    grid-column: 2/3;
 }
 
 .like_btn{
-    background-color: rgba(255, 255, 255, 0.8);;
+    background-color:  rgba(255, 255, 255, 0.8);
     border: none;
     font-size: 1.5rem;
+}
+
+.bin_btn{
+    position: relative;
+    bottom: -1.6rem;
+    background-color:  rgb(216, 222, 222);
+    border: none;
+    font-size: 1.5rem;
+    grid-column: 1/2;
+    width:1.5rem;
+    z-index: 0;
+
 }
