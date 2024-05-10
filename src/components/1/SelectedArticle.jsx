@@ -51,6 +51,7 @@ const SelectedArticle = ({ article_id }) => {
       setIsSending(true)
       deleteComment(comment_id).then(()=>{
         setIsSending(false)
+        alert('Comment deleted')
       })
       .catch((error)=>{
         setIsSending(false)
