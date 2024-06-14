@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useState } from "react";
 import styles from "./SelectedArticleScreen.module.css";
 import SelectedArticle from '../1/SelectedArticle';
 import ArticleInfoNavBar from "../1/ArticleInfoNavBar";

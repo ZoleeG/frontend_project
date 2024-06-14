@@ -22,7 +22,6 @@ li{
     display: none;
 }
 
-
 .article_card{
     grid-area: article;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -35,6 +34,7 @@ li{
     padding: 2rem;
     text-align: left;
     font-size: 1.2rem;
+    margin-top: 3rem;
     padding-bottom: 5rem;
 }
 
@@ -116,8 +116,39 @@ li{
 }
 
 .comment_count{
-    text-align: center;
+    position: relative;
+    display: block;
+    border-bottom: 1px dotted black;
+    background-color:  rgba(255, 255, 255, 0.8);
+    border: none;
+    width:30%;
+    left: 50%;
     grid-column: 1/2;
+}
+
+.comment_count .tooltiptext {
+    visibility: hidden;
+    width: 5rem;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 0.8rem;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 1.5rem;
+    right: 50%;
+  }
+
+.comment_count:hover{
+    cursor:pointer;
+}
+
+.comment_count:hover .tooltiptext{
+    visibility: visible;
 }
 
 .votes{
@@ -125,20 +156,75 @@ li{
     grid-column: 2/3;
 }
 
-.like_btn{
+.tooltip{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
     background-color:  rgba(255, 255, 255, 0.8);
     border: none;
     font-size: 1.5rem;
 }
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 5rem;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 1rem;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 1rem;
+    right: 0;
+  }
 
-.bin_btn{
-    position: relative;
-    bottom: -1.6rem;
-    background-color:  rgb(216, 222, 222);
+  .tooltip:hover{
+    cursor:pointer;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+.add_comment_link{
+    display:block;
+    text-align: center;
+    background-color:  rgba(255, 255, 255, 0.8);
     border: none;
-    font-size: 1.5rem;
-    grid-column: 1/2;
-    width:1.5rem;
-    z-index: 0;
+    font-size: 2rem;
+    grid-column: 1/3;
+    width:18%;
+    height: 60%;
+    position:relative;
+    left:40%;
+    right:50%;
+    top:7rem;
+}
 
+.add_comment_link .tooltiptext {
+    visibility: hidden;
+    width: 7rem;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 0.8rem;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 1.5rem;
+    right: 50%;
+  }
+
+.add_comment_link:hover{
+    cursor:pointer;
+}
+
+.add_comment_link:hover .tooltiptext{
+    visibility: visible;
 }

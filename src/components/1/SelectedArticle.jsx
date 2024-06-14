@@ -1,17 +1,16 @@
 import { FaComment } from "react-icons/fa";
 import { IoChatbubbleOutline } from "react-icons/io5";
-import { FaRegHeart } from "react-icons/fa";
 import styles from "./SelectedArticle.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect, useContext } from "react";
-import { fetchArticleById, fetchCommentsByArticleId, patchVote, deleteComment } from "../../../utils/api.js";
+import { fetchArticleById, fetchCommentsByArticleId, patchVote } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
-import { IoHeartDislikeOutline } from "react-icons/io5";
 import { AiOutlineDislike, AiOutlineLike} from "react-icons/ai";
 import ErrorPage from '../0/ErrorPage';
-import { RiDeleteBinLine } from "react-icons/ri";
-import { ThemeContext } from '../../context/Theme';
+import { BiCommentAdd } from "react-icons/bi";
 
+import { ThemeContext } from '../../context/Theme';
+import CommentCard from '../2/CommentCard';
 
 lineSpinner.register();
 
@@ -25,6 +24,7 @@ const SelectedArticle = ({ article_id }) => {
   const [comments, setComments] = useState([]);
   const [voteChange, setVoteChange] = useState(0);
   const [error, setErr] = useState(null)
+  const [isReRenderNeeded, setIsReRenderNeeded] = useState(false)
   
   const toggleOpen = () =>{
     setIsOpen((currOpen)=>!currOpen)
@@ -41,29 +41,20 @@ const SelectedArticle = ({ article_id }) => {
     .catch((err)=>{
       setErr({err})
     })
-  }, []);
+  }, [isReRenderNeeded]);
 
   if(error) {
     return <ErrorPage message={error.err.message}/>
   }
-  const handleDelete = (comment_id, author) => {
-    if(activeUser && activeUser.username===author){
-      setIsSending(true)
-      deleteComment(comment_id).then(()=>{
-        setIsSending(false)
-      })
-      .catch((error)=>{
-        setIsSending(false)
-        setErr('Oops, something went wrong, try again!')
-      })
-    }else{
-      alert('No right to delete')
-    }
-  }
 
   const handleVote = (vote) => {
-    patchVote(article_id, vote)
     setVoteChange((currVoteChange)=> currVoteChange+vote)
+    patchVote(article_id, vote).then((updatedArticle)=>{
+
+    }).catch((error)=>{
+      setVoteChange((currVoteChange)=> currVoteChange-vote)
+      alert(error)
+    })
   }
   
   const {
@@ -110,41 +101,16 @@ const SelectedArticle = ({ article_id }) => {
         src={article_img_url}
         alt={title}
       />
-      <div className={styles.comment_count} onClick={toggleOpen}>{isOpen ? <FaComment /> : <IoChatbubbleOutline />}
+      
+      <Link to={`/${article_id}/add_comment`} className={styles.add_comment_link} id={styles.post_button}><BiCommentAdd /><span className={styles.tooltiptext}>{!activeUser ? 'Please sign in to post a comment' : 'Add a comment'}</span></Link>
+      <div className={styles.comment_count} onClick={toggleOpen}>{!isOpen ? <><FaComment/><p className={styles.tooltiptext}>Hide comments</p></> : <><IoChatbubbleOutline/><p className={styles.tooltiptext}>Show me the comments</p></>}
         {comment_count}
       </div>
       <div className={styles.votes}>
-        <button className={styles.like_btn} disabled={voteChange === 1} onClick={() => handleVote(1)}><AiOutlineLike /></button>{+votes+voteChange}<button className={styles.like_btn} disabled={voteChange === -1} onClick={() => handleVote(-1)}><AiOutlineDislike /></button>
+      <button className={styles.tooltip} id={styles.up} disabled={voteChange === 1} onClick={() => handleVote(1)}><AiOutlineLike /><p className={styles.tooltiptext}>Vote up</p></button>{+votes+voteChange}<button className={styles.tooltip} id={styles.down} disabled={voteChange === -1} onClick={() => handleVote(-1)}><AiOutlineDislike /><p className={styles.tooltiptext}>Vote down</p></button>
       </div>
     </div>
-  
-    <ol className={styles.body}>
-      {comments.map((comment) => {
-        const {
-            comment_id,
-            body,
-            author,
-            votes,
-            created_at
-        } = comment;
-        const date = new Date(created_at)
-        return (
-          <li id={comment_id} key={comment_id} className={isOpen ? styles.listed_comment : styles.listed_comment_hide}>
-              
-              <article className={styles.comment_card}>
-                <aside className={styles.author}>{author}</aside>
-                <time className={styles.created_at}>{date.toLocaleDateString()}</time>
-                <p className={styles.text}>
-                  {body}
-                </p>
-                <button disabled={isSending} className={styles.bin_btn} type='button' onClick={()=>{handleDelete(comment_id, author)}}><RiDeleteBinLine /></button>
-                <div className={styles.comment_count}><IoChatbubbleOutline /></div>
-                <div className={styles.votes}><FaRegHeart />{+votes}</div>
-              </article>
-          </li>
-        );
-      })}
-    </ol>
+    <CommentCard setIsReRenderNeeded={setIsReRenderNeeded} comments={comments} isOpen={isOpen} isSending={isSending} setIsSending={setIsSending}/>
   </div>
   );
 };

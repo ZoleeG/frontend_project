@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { postComment } from '../../../utils/api.js'
 import styles from './PostComment.module.css';
 import ArticleInfoNavBar from "../1/ArticleInfoNavBar";
 import Header from "../1/Header";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { ThemeContext } from '../../context/Theme';
 
 const PostComment = () => {
 
-  const [isSending, setIsSending] = useState(false);
-    const [author, setAuthor] = useState("");
+    
+    const { activeUser, setActiveUser } = useContext(ThemeContext)
+    const [isSending, setIsSending] = useState(false);
     const [comment, setComment] = useState("")
     const { article_id } = useParams()
     const [err, setErr] = useState(null)
@@ -20,14 +22,12 @@ const PostComment = () => {
         setIsSending(true)
         setErr(null)
         setMessage(null)
-        postComment(article_id, author, comment).then(()=>{
+        postComment(article_id, activeUser.username, comment).then(()=>{
           setIsSending(false)
           setMessage('Comment has been posted!')
-          setAuthor("")
           setComment("")
         }).catch((error)=>{
           setIsSending(false)
-          setAuthor("")
           setComment("")
           setErr('Oops, something went wrong, try again!')
         })
@@ -35,27 +35,10 @@ const PostComment = () => {
   
     return (<div className={styles.grid_container}>
         <Header className={styles.header} />
-        <ArticleInfoNavBar className={styles.navbar}/>
+        <ArticleInfoNavBar className={styles.navbar} article_id={article_id}/>
       <form onSubmit={handleSubmit} className={styles.comment} id={styles.post_comment_form}>
         <h1>Please post your comment below</h1>
-        <label htmlFor={styles.author}>Please select a user<br/>
-          <select id={styles.author}
-            type="text" 
-            onChange={(e) => setAuthor(e.target.value)}
-            value={author}
-            required
-          >
-            <option value="">Please select</option>
-            <option value="tickle122">tickle122</option>
-            <option value="grumpy19">grumpy19</option>
-            <option value="happyamy2016">happyamy2016</option>
-            <option value="cooljmessy">cooljmessy</option>
-            <option value="weegembump">weegembump</option>
-            <option value="jessjelly">jessjelly</option>
-            <option value="invalid">Non-existent username</option>
-          </select>
-        </label><br />
-        <label htmlFor={styles.comment}>Type your comment below
+        <label htmlFor={styles.comment}>
           <textarea id={styles.comment}
             type="text" 
             value={comment}
@@ -64,9 +47,10 @@ const PostComment = () => {
             placeholder="Comment here..."
           />
         </label><br/>
-        <input disabled={isSending} className={!isSending ? styles.submit : styles.disabled_submit} type="submit" value={isSending ? 'SENDING': 'SEND'}/>{message ? <p className={styles.check}><FaRegCircleCheck /></p> : null}<br/>
+        <input disabled={isSending || !activeUser} className={!isSending ? styles.submit : styles.disabled_submit} type="submit" value={isSending ? 'SENDING': 'SEND'}/>{message ? <p className={styles.check}><FaRegCircleCheck /></p> : null}<br/>
         {err ? <p className={styles.error}>{err}</p> : null}
         {message ? <p className={styles.success}>{message}</p> : null}
+        {!activeUser ? <p className={styles.error}>Please sign in to post a comment</p> : null}
       </form>
       </div>
     )

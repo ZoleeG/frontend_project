@@ -11,6 +11,11 @@ const Header = () => {
   const [message, setMessage] = useState()
   const [user, setUser] = useState("")
 
+  const handleChange = (e) =>{
+    e.preventDefault()
+      setUser(e.target.value)
+  }
+
 
   const handleSubmit =(e)=>{
     e.preventDefault()
@@ -20,11 +25,11 @@ const Header = () => {
     fetchUser(user).then(([userData])=>{
       setActiveUser(userData)
       setUser("")
-      setMessage('Logged in')
+      setMessage(`Hi ${userData.name}`)
     })
-    .catch(()=>{
+    .catch((error)=>{
       setUser("")
-      setErr('Oops, something went wrong, try again!')
+      setErr(error.message)
     })
   }
   
@@ -37,11 +42,11 @@ const Header = () => {
         <label className="dropdown" htmlFor="user">
           <select id="user"
             type="text" 
-            onChange={(e) => setUser(e.target.value)}
+            onChange={handleChange}
             value={user}
             required
           >
-            <option value="">Please select</option>
+            <option value="">Sign in here</option>
             <option value="tickle122">tickle122</option>
             <option value="grumpy19">grumpy19</option>
             <option value="happyamy2016">happyamy2016</option>
@@ -50,11 +55,11 @@ const Header = () => {
             <option value="jessjelly">jessjelly</option>
           </select>
         </label>
-        <input className="login" type="submit" value='LOGIN'/>
+        <input type="submit" className='login' id='login' name='login' value='Sign in'/>
         </form>}
         {activeUser ? <p className="check"><FaRegCircleCheck /></p> : null}
-        {activeUser ? <p className="success">{message}</p> : null}
-        {activeUser ? <p className="greeting">{`Hi ${activeUser.name}`}</p> : null}
+        {activeUser ? <p className="greeting">{message}</p> : null}
+        {activeUser ? <p className="success">{`Signed in as ${activeUser.name}`}</p> : null}
         {activeUser ? <p className="username_display">{`${activeUser.username}`}</p> : null}
         {err ? <p className="error">{err}</p> : null}
       </nav>

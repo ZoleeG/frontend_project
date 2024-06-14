@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 
 lineSpinner.register();
 
-const Articles = () => {
+const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchArticles().then((fetchedArticles) => {
+    fetchArticles(sortByQuery, orderQuery).then((fetchedArticles) => {
       setArticles(fetchedArticles);
       setIsLoading(false);
     });
@@ -31,42 +31,107 @@ const Articles = () => {
     </div>
   ) : (
     <ol className={styles.body}>
-      {articles.map((article) => {
-        const {
-          article_id,
-          title,
-          topic,
-          author,
-          votes,
-          created_at,
-          comment_count,
-          article_img_url,
-        } = article;
-        const date = new Date(created_at)
-        return (
-          <li id={article_id} key={article_id}>
-              <Link to={`/${article_id}`}>
-              <div className={styles.article_card}>
-                <div className={styles.author}>{author}</div>
-                <div className={styles.created_at}>{date.toLocaleDateString()}</div>
-                <div className={styles.text}>
-                  <div className={styles.title}>
-                    <h4>
-                      <b>{title}</b>
-                    </h4>
+      {selectedTopic
+        ? articles
+            .filter((article) => {
+              return article.topic === selectedTopic;
+            })
+            .map((article) => {
+              const {
+                article_id,
+                title,
+                topic,
+                author,
+                votes,
+                created_at,
+                comment_count,
+                article_img_url,
+              } = article;
+              const date = new Date(created_at);
+              return (
+                <li id={article_id} key={article_id}>
+                  <Link to={`/${article_id}`}>
+                    <div className={styles.article_card}>
+                      <div className={styles.author}>{author}</div>
+                      <div className={styles.created_at}>
+                        {date.toLocaleDateString()}
+                      </div>
+                      <div className={styles.text}>
+                        <div className={styles.title}>
+                          <h4>
+                            <b>{title}</b>
+                          </h4>
+                        </div>
+                        <div className={styles.topic}>
+                          <i># {topic}</i>
+                        </div>
+                      </div>
+                      <img
+                        className={styles.img}
+                        src={article_img_url}
+                        alt={title}
+                      />
+                      <div className={styles.comment_count}>
+                        <IoChatbubbleOutline />
+                        {comment_count}
+                      </div>
+                      <div className={styles.votes}>
+                        <FaRegHeart />
+                        {+votes}
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })
+        : articles.map((article) => {
+            const {
+              article_id,
+              title,
+              topic,
+              author,
+              votes,
+              created_at,
+              comment_count,
+              article_img_url,
+            } = article;
+            const date = new Date(created_at);
+            return (
+              <li id={article_id} key={article_id}>
+                <Link to={`/${article_id}`}>
+                  <div className={styles.article_card}>
+                    <div className={styles.author}>{author}</div>
+                    <div className={styles.created_at}>
+                      {date.toLocaleDateString()}
+                    </div>
+                    <div className={styles.text}>
+                      <div className={styles.title}>
+                        <h4>
+                          <b>{title}</b>
+                        </h4>
+                      </div>
+                      <div className={styles.topic}>
+                        <i># {topic}</i>
+                      </div>
+                    </div>
+                    <img
+                      className={styles.img}
+                      src={article_img_url}
+                      alt={title}
+                    />
+                    <div className={styles.comment_count}>
+                      <IoChatbubbleOutline />
+                      {comment_count}
+                    </div>
+                    <div className={styles.votes}>
+                      <FaRegHeart />
+                      {+votes}
+                    </div>
                   </div>
-                <div className={styles.topic}>
-                  <i># {topic}</i>
-                </div>
-                </div>
-                <img className={styles.img} src={article_img_url} alt={title} />
-                <div className={styles.comment_count}><IoChatbubbleOutline />{comment_count}</div>
-                <div className={styles.votes}><FaRegHeart />{+votes}</div>
-              </div>
-            </Link>
-          </li>
-        );
-      })}
+                </Link>
+              </li>
+            );
+          })}
     </ol>
   );
 };

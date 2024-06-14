@@ -10,8 +10,8 @@ export const fetchArticleById = (article_id) => {
   });
 };
 
-export const fetchArticles = () => {
-  return backendApi.get(`/articles`).then((res) => {
+export const fetchArticles = (sortbyparam, orderparam) => {
+  return backendApi.get(`/articles`,{params:{sort_by: sortbyparam, order: orderparam }}).then((res) => {
     return res.data.articles;
   });
 };
@@ -27,7 +27,7 @@ export const fetchCommentsByArticleId = (article_id) => {
 
 export const patchVote = (article_id, vote) => {
   return backendApi.patch(`/articles/${article_id}`, { inc_votes : vote }).then((res) => {
-    return res.data.article;
+    return res.data.updatedArticle;
   })
 }
 
@@ -37,14 +37,22 @@ export const postComment = (article_id, author, comment ) => {
   })
 }
 
-export const  fetchUser= (username) => {
+export const fetchUser= (username) => {
   return backendApi.get("/users",{params:{username: username}}).then((res) => {
     return res.data.users;
   })
 }
 
-export const  deleteComment= (comment_id) => {
+export const deleteComment= (comment_id) => {
   return backendApi.delete(`comments/${comment_id}`).then((res) => {
     return res.data;
   })
 }
+
+export const fetchTopics = () => {
+  return backendApi.get("/topics").then((res) => {
+    return res.data.topics;
+  })
+}
+
+
