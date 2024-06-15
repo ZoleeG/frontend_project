@@ -187,3 +187,11 @@ body {
 .go_back_to_article:hover .tooltiptext {
   visibility: visible;
 }
+
+.errorpage {
+  display: flex;
+  height: 85vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

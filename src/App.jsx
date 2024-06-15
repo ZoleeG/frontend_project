@@ -20,7 +20,7 @@ function App() {
       <Route path="/topics/:topic" element={<HomeScreen />} />
       <Route path="/sort" element={<Sort />} />
       <Route path="/articles" element={<HomeScreen />} />
-      <Route path="*" element={ErrorPage} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   </ThemeProvider>
   )

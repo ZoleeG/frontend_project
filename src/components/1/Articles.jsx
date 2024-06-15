@@ -3,22 +3,47 @@ import { FaRegHeart } from "react-icons/fa";
 import styles from "./Articles.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect } from "react";
-import { fetchArticles } from "../../../utils/api.js";
+import { fetchArticles, fetchTopics } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
+import ErrorPage from "../0/ErrorPage.jsx";
 
 lineSpinner.register();
 
 const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
   const [articles, setArticles] = useState([]);
+  const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setErr] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchArticles(sortByQuery, orderQuery).then((fetchedArticles) => {
-      setArticles(fetchedArticles);
-      setIsLoading(false);
-    });
-  }, []);
+    Promise.all([fetchArticles(sortByQuery, orderQuery), fetchTopics()])
+      .then(([fetchedArticles, fetchedTopics]) => {
+        setArticles(fetchedArticles);
+        setTopics(fetchedTopics);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setErr({ err });
+      })
+      .finally(() => {
+        if (
+          selectedTopic &&
+          !topics
+            .map((element) => {
+              return element.slug;
+            })
+            .includes(selectedTopic)
+        ) {
+          return <ErrorPage />;
+        }
+        if (error) {
+          return <ErrorPage message={error.err.message} />;
+        }
+      });
+  }, [sortByQuery, orderQuery]);
+
+  
 
   return isLoading ? (
     <div className={styles.loading_symbol}>
