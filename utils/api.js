@@ -10,8 +10,8 @@ export const fetchArticleById = (article_id) => {
   });
 };
 
-export const fetchArticles = (sortbyparam, orderparam) => {
-  return backendApi.get(`/articles`,{params:{sort_by: sortbyparam, order: orderparam }}).then((res) => {
+export const fetchArticles = (topicparam, sortbyparam, orderparam, limit, page) => {
+  return backendApi.get(`/articles`,{params:{topic: topicparam, sort_by: sortbyparam, order: orderparam, limit, p: page }}).then((res) => {
     return res.data.articles;
   });
 };
@@ -19,9 +19,6 @@ export const fetchArticles = (sortbyparam, orderparam) => {
 export const fetchCommentsByArticleId = (article_id) => {
   return backendApi.get(`/articles/${article_id}/comments`).then((res) => {
     return res.data.comments;
-  })
-  .catch((err)=>{
-    console.log(err);
   })
 };
 
@@ -54,5 +51,11 @@ export const fetchTopics = () => {
     return res.data.topics;
   })
 }
+
+export const getTotalArticles = (topicparam) => {
+  return backendApi.get(`/articles`,{params:{topic: topicparam, limit: 120}}).then((res) => {
+    return res.data.articles.length;
+  });
+};
 
 

@@ -1,5 +1,10 @@
-body {
+* {
   margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -34,8 +39,11 @@ body {
 }
 
 #user {
-  width: 7rem;
+  width: 8rem;
   margin-left: 0rem;
+  padding: 0px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .login {
@@ -44,6 +52,9 @@ body {
   position: relative;
   top: 1.5rem;
   margin-left: 1rem;
+  padding: 0px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .error {
@@ -194,4 +205,14 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.MuiStack-root{
+}
+
+.MuiPagination-root {
+}
+
+.MuiPagination-ul {
+  justify-content: center;
 }

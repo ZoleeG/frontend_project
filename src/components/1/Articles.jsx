@@ -3,21 +3,41 @@ import { FaRegHeart } from "react-icons/fa";
 import styles from "./Articles.module.css";
 import { lineSpinner } from "ldrs";
 import { useState, useEffect } from "react";
-import { fetchArticles, fetchTopics } from "../../../utils/api.js";
+import { fetchArticles, fetchTopics, getTotalArticles } from "../../../utils/api.js";
 import { Link } from "react-router-dom";
 import ErrorPage from "../0/ErrorPage.jsx";
+import BasicPagination from "./BasicPagination.jsx";
+import SortingOptions from "./SortingOptions.jsx";
 
 lineSpinner.register();
 
-const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
+const Articles = ({ selectedTopic, sortByQuery, orderQuery, limitQuery, pageQuery }) => {
+  const [totalArticles, setTotalArticles] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState('')
+
+  const [sortBy, setSortBy] = useState('');
+  const [order, setOrder] = useState('');
+
+  const [pickedTopic, setPickedTopic] = useState('');
   const [articles, setArticles] = useState([]);
+
   const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const [error, setErr] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    Promise.all([fetchArticles(sortByQuery, orderQuery), fetchTopics()])
+
+    getTotalArticles(selectedTopic).then((total) => {
+      setTotalArticles(total)
+      setTotalPages(Math.ceil(total / limitQuery))
+  })
+
+    Promise.all([fetchArticles(selectedTopic, sortByQuery, orderQuery, limitQuery, page), fetchTopics()])
       .then(([fetchedArticles, fetchedTopics]) => {
         setArticles(fetchedArticles);
         setTopics(fetchedTopics);
@@ -41,7 +61,7 @@ const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
           return <ErrorPage message={error.err.message} />;
         }
       });
-  }, [sortByQuery, orderQuery]);
+  }, [sortByQuery, orderQuery, limitQuery, page]);
 
   
 
@@ -55,6 +75,8 @@ const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
       ></l-line-spinner>
     </div>
   ) : (
+    <>
+    <SortingOptions page={page} limit={limit} setLimit={setLimit} topics={topics} setSortBy={setSortBy} sortBy={sortBy} setOrder={setOrder} order={order} setPickedTopic={setPickedTopic} pickedTopic={pickedTopic} />
     <ol className={styles.body}>
       {selectedTopic
         ? articles
@@ -158,6 +180,12 @@ const Articles = ({ selectedTopic, sortByQuery, orderQuery }) => {
             );
           })}
     </ol>
+    <BasicPagination
+    setPage={setPage}
+    page={page}
+    totalPages={totalPages}
+  />
+  </>
   );
 };
 
