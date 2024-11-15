@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-src/context/firebase-config.js
+src/context/.auth_config
 
 # Editor directories and files
 .vscode/*

@@ -6,7 +6,7 @@ import { getUsers } from "../../utils/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import Auth from "./Auth";
-import { auth } from "../context/firebase-config";
+import { auth } from "../context/.auth_config/firebase-config";
 import { lineSpinner } from "ldrs";
 
 lineSpinner.register();

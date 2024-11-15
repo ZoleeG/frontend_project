@@ -1,6 +1,6 @@
 import React from 'react';
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth, provider } from '../context/firebase-config';
+import { auth, provider } from '../context/.auth_config/firebase-config.js';
 import '../styles/Auth.css'
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserProvider.jsx";
