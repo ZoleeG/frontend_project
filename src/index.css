@@ -1,3 +1,76 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.page-not-found {
+  text-align: center;
+  margin: 0;
+  padding: 3rem 0;
+}
+
+.not-found {
+  font-weight: 800;
+  font-size: 1.6rem;
+}
+
+.link-to-home button {
+  margin: 2rem;
+  padding: 1rem;
+  background-color: rgb(221, 127, 50);
+}
+
+.dark .MuiPagination-root {   button {  
+  color: white;
+  margin: 0 0.5rem;
+} }
+
+.dark .formControl {
+  color: white;
+}
+
+.dark .card, .card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 10px 7px;
+}
+
+.MuiPagination-root {
+  ul {
+    flex-direction: row !important;
+  }
+}
+.errorpage {
+  display: flex;
+  height: 85vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.MuiPagination-ul {
+  flex-direction: row !important;
+  justify-content: center;
+}
+
+.card-actions{
+  display:flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: .5rem;
+}

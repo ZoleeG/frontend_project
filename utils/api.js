@@ -16,34 +16,56 @@ export const fetchArticles = (topicparam, sortbyparam, orderparam, limit, page) 
   });
 };
 
-export const fetchCommentsByArticleId = (article_id) => {
-  return backendApi.get(`/articles/${article_id}/comments`).then((res) => {
-    return res.data.comments;
+export function patchArticleVotes(article_id, newVotes) {
+  return backendApi.patch(`/articles/${article_id}`, newVotes).then((patchedArticle) => {
+      return patchedArticle.data.updatedArticle
+  })
+}
+
+export const getTotalComments = (article_id) => {
+  return backendApi.get(`/articles/${article_id}/comments`, {params:{limit: 120}}).then((res) => {
+    return res.data.comments.length
   })
 };
 
-export const patchVote = (article_id, vote) => {
-  return backendApi.patch(`/articles/${article_id}`, { inc_votes : vote }).then((res) => {
-    return res.data.updatedArticle;
+export function getArticleComments(article_id, commentsPage, commentsLimit, commentsSortBy, commentsOrder) {
+  return backendApi.get(`/articles/${article_id}/comments`, {params: {
+      p: commentsPage,
+      limit: commentsLimit,
+      sort_by: commentsSortBy,
+      order: commentsOrder
+  }})
+  .then((res) => {
+      return res.data.comments
   })
 }
 
-export const postComment = (article_id, author, comment ) => {
-  return backendApi.post(`/articles/${article_id}/comments`, {username: author, body: comment}).then((res) => {
-    return res.data.newComment;
+export function patchCommentVotes(comment_id, newVotes) {
+  return backendApi.patch(`/comments/${comment_id}`, newVotes).then((patchedComment) => {
+      return patchedComment.data.updatedComment
   })
 }
 
-export const fetchUser= (username) => {
+export function postComment(article_id, inputBody) {
+  return backendApi.post(`/articles/${article_id}/comments`, inputBody).then((res) => {
+      return res.data.newComment
+  })
+}
+
+export const fetchUser = (username) => {
   return backendApi.get("/users",{params:{username: username}}).then((res) => {
     return res.data.users;
   })
 }
 
-export const deleteComment= (comment_id) => {
-  return backendApi.delete(`comments/${comment_id}`).then((res) => {
-    return res.data;
+export const getUsers = () => {
+  return backendApi.get(`/users`).then((res) => {
+      return res.data.users
   })
+}
+
+export function deleteComments(comment_id) {
+  return backendApi.delete(`/comments/${comment_id}`)
 }
 
 export const fetchTopics = () => {
@@ -58,4 +80,30 @@ export const getTotalArticles = (topicparam) => {
   });
 };
 
+export function postArticle(newArticle) {
+  return backendApi.post(`/articles`, newArticle).then((newArticle) => {
+      return newArticle.data.newArticle
+  })
+}
+export function postUser(newUser) {
+  return backendApi.post('/users', newUser)
+  .then((user) => {
+      return user.data.newUser
+  })
+}
 
+export function getTopics() {
+  return backendApi.get("/topics").then((topics) => {
+      return topics.data.topics
+  })
+}
+
+export function deleteArticles (article_id) {
+  return backendApi.delete(`/articles/${article_id}`)
+}
+
+export function postTopic(inputBody) {
+  return backendApi.post(`/topics`, inputBody).then((res) => {
+      return res.data.newTopic
+  })
+}

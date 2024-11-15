@@ -1,0 +1,15 @@
+
+
+#newComment-form input {
+    padding: 0.5em;
+    width: 15rem;
+    min-height: 1rem;
+    resize: none;
+}
+
+#newComment-button {
+    background-color: #002984;
+    color: white;
+}
+
+

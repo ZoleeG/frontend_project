@@ -1,0 +1,25 @@
+nav ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 1rem;
+    align-items: center;
+    font-size: 1.4rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 2rem;
+}
+
+.nav-link:hover {
+    color: #3f51b5;
+}
+
+.nav-link.active {
+    background-color: #002984;
+    color: white;
+}

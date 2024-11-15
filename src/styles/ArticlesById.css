@@ -1,0 +1,94 @@
+.article {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  padding: 0;
+}
+
+#article-topic {
+  width: 6rem;
+  margin: 1rem 0;
+}
+
+#article-body {
+  margin: 1rem 0;
+}
+
+#article-title {
+  margin: 1rem 0;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.date-and-author {
+  color: #3f51b5;
+}
+
+#article-date {
+  font-weight: 600;
+}
+
+.article-author {
+  display: flex;
+  align-items: center;
+}
+
+#article-username {
+  padding-left: 0.5rem;
+}
+
+.comments-header {
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+#deleteComment-icon:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+#deleteComment-icon {
+  color: #3f51b5;
+  float: right;
+}
+
+.voting-section {
+  display: flex;
+  margin: 2rem;
+}
+
+.voting-section p {
+  padding: 0 1rem;
+}
+
+.vote-button {
+  color: #3f51b5;
+  cursor: pointer;
+}
+
+.vote-button:active {
+    transform: translateY(4px);
+}
+
+.vote-button:disabled{
+    transform: none;
+    color:rgb(165, 172, 179);
+    cursor: default;
+}
+
+.vote-button:hover{
+    color: #172a92;
+}
+.vote-button:hover:disabled{
+    color:rgb(165, 172, 179);
+}
+
+.alert-message {
+  position: fixed;
+  width: 100%;
+  margin: 0;
+  top: 0;
+}

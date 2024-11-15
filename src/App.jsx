@@ -1,27 +1,54 @@
 import { Routes, Route } from "react-router-dom";
-import SelectedArticleScreen from './components/0/SelectedArticleScreen'
-import HomeScreen from './components/0/HomeScreen';
-import ErrorPage from './components/0/ErrorPage';
-import './App.css'
-import PostComment from './components/0/PostComment';
-import {ThemeProvider} from "./context/Theme"
-import Topics from "./components/0/Topics";
-import Sort from "./components/0/Sort";
+import ErrorPage from './components/ErrorPage';
+import UserProvider from "./context/UserProvider.jsx"
+import Header from "./components/Header.jsx";
+import Articles from "./components/Articles.jsx";
+import NavBar from "./components/NavBar.jsx";
+import { createTheme, ThemeProvider } from '@mui/material';
+import Users from "./components/Users.jsx";
+import {useState } from 'react'
+import ArticleById from "./components/ArticleById.jsx";
+import Bookmark from "./components/Bookmark.jsx"
+import { PostArticle } from "./components/PostArticle.jsx";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#3f51b5',
+      light: '#757de8',
+    },
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
 function App() {
 
+  const [sortBy, setSortBy] = useState();
+  const [order, setOrder] = useState();
+  const [limit, setLimit] = useState();
+
+  const [bookmarked, setBookmarked] = useState([])
+  const [page, setPage] = useState(1)
+  const [articles, setArticles] = useState([])
+
   return (
-  <ThemeProvider>
+  <ThemeProvider theme={theme}>
+  <UserProvider>
+    <Header />
+    <NavBar setPage={setPage} sortBy={sortBy} order={order} limit={limit} />
     <Routes>
-      <Route path="/" element={<HomeScreen />}/>
-      <Route path="/:article_id" element={<SelectedArticleScreen />} />
-      <Route path="/:article_id/add_comment" element={<PostComment />} />
-      <Route path="/topics" element={<Topics />} />
-      <Route path="/topics/:topic" element={<HomeScreen />} />
-      <Route path="/sort" element={<Sort />} />
-      <Route path="/articles" element={<HomeScreen />} />
+      <Route path="/" element={<Articles articles={articles} setArticles={setArticles} setPage={setPage} page={page} sortBy={sortBy} order={order} limit={limit} setSortBy={setSortBy} setOrder={setOrder} setLimit={setLimit} />}/>
+      <Route path="/:article_id" element={<ArticleById bookmarked={bookmarked} setBookmarked={setBookmarked} />} />
+      <Route path="/topics/:topic" element={<Articles articles={articles} setArticles={setArticles} setPage={setPage} page={page} sortBy={sortBy} order={order} limit={limit} setSortBy={setSortBy} setOrder={setOrder} setLimit={setLimit} />} />
+      <Route path="/articles" element={<Articles articles={articles} setArticles={setArticles} setPage={setPage} page={page} sortBy={sortBy} order={order} limit={limit} setSortBy={setSortBy} setOrder={setOrder} setLimit={setLimit} />} />
+      <Route path="/users" element={<Users />} />
       <Route path="*" element={<ErrorPage />} />
+      <Route path="/bookmarked" element={<Bookmark bookmarked={bookmarked} setBookmarked={setBookmarked}/>} />
+      <Route path="/articles/upload" element={<PostArticle articles={articles} setArticles={setArticles}/>}/>
     </Routes>
+  </UserProvider>
   </ThemeProvider>
   )
 }

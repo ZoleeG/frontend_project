@@ -1,0 +1,13 @@
+#googleSignInButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+  }
+  
+  /* Additional styling to remove scrollbars or other unwanted elements */
+  #googleSignInButton > div {
+    overflow: hidden; /* Hide any unwanted overflow */
+  }
