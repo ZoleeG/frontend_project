@@ -10,7 +10,7 @@ import BasicPagination from "./BasicPagination.jsx";
 import SortingOptions from "./SortingOptions.jsx";
 import ArticleCard from "./ArticleCard.jsx";
 import "../styles/Articles.css";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FloatingActionBtn from "./FloatingActionBtn.jsx";
 import SuccessAlert from "./SuccessAlert.jsx";
 
@@ -26,13 +26,12 @@ export default function Articles({
   page,
   setPage,
   articles,
-  setArticles,
+  setArticles, searchParams, setSearchParams
 }) {
 
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlertMessage, setShowAlertMessage] = useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
   const sortByQuery = searchParams.get("sort_by") || sortBy;
   const orderQuery = searchParams.get("order") || order;
   const limitQuery = searchParams.get("limit") || limit || 10

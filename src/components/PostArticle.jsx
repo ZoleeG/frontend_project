@@ -15,11 +15,24 @@ export function PostArticle({articles, setArticles}) {
     const { activeUser } = useContext(UserContext)
 
     if (!activeUser.username) {
-        return( <div className="flex flex-col justify-center p-[2rem]">
+        if(!activeUser.displayName){
+            return (
+              <div className="flex flex-col justify-center p-[2rem]">
               <h2 className="text-center font-bold text-[1.3rem] py-[2rem]">Login to post an article</h2>
               <Link to='/users' className="max-w-[20rem] m-auto"><button className="p-[1rem] rounded-lg bg-[#DD3232] text-white">Login</button></Link>
         </div>
         )
+        }
+        else
+        {
+            return ( 
+                <div className="flex flex-col justify-center p-[2rem]">
+                <h2 className="text-center font-bold text-[1.3rem] py-[2rem]">Please login with another account, as this account is not enabled to post articles at the moment.</h2>
+                <Link to='/users' className="max-w-[20rem] m-auto"><button className="p-[1rem] rounded-lg bg-[#DD3232] text-white">Login</button></Link>
+                </div>
+            )
+        }
+        
     }
 
     const [topics, setTopics] = useState([])

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { fetchTopics } from '../../utils/api.js'
 import { capitaliseStr } from '../../utils/capitaliseStr'
 
-export default function NavBar({setPage, limit, sortBy, order}) {
+export default function NavBar({setPage, limit, sortBy, order, searchParams, setSearchParams}) {
 
     const [topics, setTopics] = useState([])
 

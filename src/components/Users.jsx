@@ -89,15 +89,15 @@ export default function Users() {
         <Auth />
       </ul>
       <div className="flex justify-center pb-[2rem] mt-[2rem]">
-        <button onClick={signOutFromGoogle}>Sign out</button>
+        {activeUser ? <button onClick={signOutFromGoogle}>Sign out</button> : null}
       </div>
 
       {!activeUser ? (<div className="flex justify-center pb-[3rem]">
         <button className="text-[#DD3232]" onClick={handleSignUpClick}>
           New user? Sign Up Here
         </button>
-      </div>) : (<div className="flex justify-center pb-[3rem]">
-         Signed In
+      </div>) : (<div className="flex justify-center pb-[3rem] text-secondary">
+         You are signed in {activeUser.username || activeUser.displayName}
       </div>)}
       <div className="fixed bottom-5 right-5 p-[1rem]">
         <FloatingActionBtn />
